@@ -1,54 +1,57 @@
-import React, { Component } from 'react';
-import { addRestaurant } from '../actions/restaurants';
-import { connect } from 'react-redux';
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { addRestaurant } from "../actions/restaurants"
 
 export class RestaurantInput extends Component {
-
   state = {
-    name: '',
-    location: ''
+    name: "",
+    location: "",
   }
 
-  handleOnNameChange = event => {
+  handleOnNameChange = (event) => {
     this.setState({
-      name: event.target.value
-    });
+      name: event.target.value,
+    })
   }
 
-  handleOnLocationChange = event => {
+  handleOnLocationChange = (event) => {
     this.setState({
-      location: event.target.value
-    });
+      location: event.target.value,
+    })
   }
 
-  handleOnSubmit = event => {
-    event.preventDefault();
+  handleOnSubmit = (event) => {
+    event.preventDefault()
+    this.props.addRestaurant(this.state)
     // add missing code
   }
 
   render() {
-    return(
+    return (
       <form onSubmit={(event) => this.handleOnSubmit(event)}>
         <p>
           <input
             type="text"
             onChange={(event) => this.handleOnNameChange(event)}
             id="name"
-            placeholder="restaurant name" />
+            value={this.state.name}
+            placeholder="restaurant name"
+          />
         </p>
         <p>
           <input
             type="text"
             onChange={(event) => this.handleOnLocationChange(event)}
+            value={this.state.location}
             id="location"
-            placeholder="location" />
+            placeholder="location"
+          />
         </p>
         <input type="submit" />
       </form>
-    );
+    )
   }
-};
-
+}
 
 //connect this component by wrapping RestaurantInput below
-export default RestaurantInput
+export default connect(null, { addRestaurant })(RestaurantInput)
